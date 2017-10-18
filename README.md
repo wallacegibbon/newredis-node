@@ -79,7 +79,7 @@ Then you shutdown the redis server, this is what you will see:
 You will never see string like "\*\*command get error" because the callback of `conn.get` has never been not called.
 
 
-2. node\_redis wraps every redis command. I don't like it. I think writing `conn.execute([ "get", "blah" ])` is more flexible then write `conn.get("blah")`. It's easier to integrate the previous one to other softwares.
+2. node\_redis wraps every redis command. I don't think it's right. Writing `conn.execute([ "get", "blah" ])` is more flexible then writing `conn.get("blah")`. The previous one is easier to integrate with other programs.
 
 For more complex method like `hmset`, writing `conn.hmset({ a: 1, b: 2 })` is cool, but you can also solve it by writing a simple helper function like this:
 
@@ -89,8 +89,7 @@ function tohmset(obj) {
 }
 ```
 
-then `conn.execute(tohmset(obj))`. Convenient, too. And you don't need to remember those rules for a certain library.
-
+then `conn.execute(tohmset({ a: 1, b: 2 }))`. Convenient, too. And you don't need to remember those rules for a certain library.
 
 
 That's why I implement another redis pool.
