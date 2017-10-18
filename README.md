@@ -18,7 +18,7 @@ npm install newredis
 A simple example:
 
 ```javascript
-const RedisPool = require("newredis");
+const { RedisPool } = require("newredis");
 const pool = new RedisPool({ port: 6379, host: "localhost" });
 
 (async function() {

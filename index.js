@@ -1,2 +1,5 @@
-module.exports = require("./lib/pool");
+const RedisPool = require("./lib/pool");
 
+module.exports = {
+  RedisPool,
+};

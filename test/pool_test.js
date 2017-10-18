@@ -1,10 +1,8 @@
-const RedisPool = require("../");
+const { RedisPool } = require("../");
 
 
 const defaultConfig = {
   connectionLimit: 2,
-  host: "localhost",
-  port: 6379,
 };
 
 
