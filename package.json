@@ -1,14 +1,15 @@
 {
   "name": "newredis",
   "description": "A redis connection pool implementation based on hiredis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
   },
   "keywords": [
     "redis",
-    "pool"
+    "pool",
+    "es6"
   ],
   "license": "MIT",
   "repository": {

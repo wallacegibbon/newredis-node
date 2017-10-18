@@ -1,4 +1,4 @@
-const RedisPool = require("../lib/pool");
+const RedisPool = require("../");
 
 
 const defaultConfig = {

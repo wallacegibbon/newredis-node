@@ -1,0 +1,5 @@
+{
+  "connectionLimit": 2,
+  "host": "localhost",
+  "port": 6379
+}
