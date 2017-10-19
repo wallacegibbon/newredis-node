@@ -78,6 +78,11 @@ Then you shutdown the redis server, this is what you will see:
 
 You will never see string like "\*\*command get error" because the callback of `conn.get` has never been not called.
 
+This is odd, and it's also why you can't make a perfect Promise wrapper for node\_redis.
+
+In my opinion, if the connection got error when `conn.get` is called, it should trigger the callback of `conn.get`, and give err as argument to the callback of `conn.get`. And I made newredis-node works in that way.
+
+
 
 2. node\_redis wraps every redis command. I don't think it's right. Writing `conn.execute([ "get", "blah" ])` is more flexible then writing `conn.get("blah")`. The previous one is easier to integrate with other programs.
 
