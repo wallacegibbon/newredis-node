@@ -19,7 +19,9 @@ async function send4ever(conn) {
 
 async function test() {
   try {
+    console.log("Trying to create connection to redis server...");
     const conn = await createConnection(6379, "localhost");
+    console.log("Trying to send request to redis server...");
     await send4ever(conn);
   } catch (e) {
     console.error("**Err:", e.message);

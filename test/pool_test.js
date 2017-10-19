@@ -65,21 +65,22 @@ async function delay(milliseconds) {
 
 
 async function testServerError() {
-  try {
-    console.log("Trying to get redis connection from pool".padEnd(78, "."));
-    var conn = await pool.getConnection();
+  while (true) {
+    try {
+      console.log("Trying to get redis connection from pool".padEnd(78, "."));
+      var conn = await pool.getConnection();
 
-    var r = await conn.execute([ "get", "test_string" ]);
-    console.log("r:", r);
+      var r = await conn.execute([ "get", "test_string" ]);
+      console.log("r:", r);
 
-    conn.release();
+      conn.release();
 
-  } catch (e) {
-    console.error("Caught error:", e);
+    } catch (e) {
+      console.error("Caught error:", e);
+    }
+
+    await delay(2000);
   }
-
-  await delay(2000);
-  testServerError();
 }
 
 
