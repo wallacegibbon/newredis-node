@@ -1,7 +1,7 @@
 {
   "name": "newredis",
   "description": "A redis connection pool implementation based on hiredis",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
@@ -21,6 +21,6 @@
     "hiredis": "^0.5.0"
   },
   "engines": {
-    "node": "8.x.x"
+    "node": ">=8.0"
   }
 }
