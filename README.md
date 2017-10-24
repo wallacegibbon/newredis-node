@@ -86,15 +86,17 @@ In my opinion, if the connection got error when `conn.get` is called, it should 
 
 2. node\_redis wraps every redis command. I don't think it's right. Writing `conn.execute([ "get", "blah" ])` is more flexible then writing `conn.get("blah")`. The previous one is easier to integrate with other programs.
 
-For more complex method like `hmset`, writing `conn.hmset({ a: 1, b: 2 })` is cool, but you can also solve it by writing a simple helper function like this:
+For more complex method like `hmset`, writing `conn.hmset(key, { a: 1, b: 2 })` is cool, but you can also solve it by writing a simple helper function like this:
 
 ```javascript
-function tohmset(obj) {
-  return [ "hmset" ].concat([].concat(...Object.entries(obj)));
+function tohmset(key, obj) {
+  return [ "hmset", key ].concat([].concat(...Object.entries(obj)));
 }
 ```
 
-then `conn.execute(tohmset({ a: 1, b: 2 }))`. Convenient, too. And you don't need to remember those rules for a certain library.
+then `conn.execute(tohmset(key, { a: 1, b: 2 }))`. Convenient, too. And you don't need to remember those rules for a certain library.
+
+If you think the wrapper is important, you should do it in upper level, not the basic library.
 
 
 That's why I implement another redis pool.
