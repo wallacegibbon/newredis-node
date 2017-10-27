@@ -34,9 +34,9 @@ function printTitle(str) {
 
 
 async function testOP() {
-  const conn = await pool.getConnection()
+  const conn = await pool.getConnection();
 
-  printTitle("TestING REDIS set");
+  printTitle("Testing REDIS set");
   await conn.execute([ "set", "test_string", "Info from my redis-pool" ]);
 
   printTitle("Testing redis get");
@@ -64,6 +64,33 @@ async function delay(milliseconds) {
 }
 
 
+async function testErrOP() {
+  while (true) {
+    try {
+      console.log("Trying to get redis connection from pool".padEnd(78, "."));
+      var conn = await pool.getConnection();
+
+      var r = await conn.execute([ "get", "test_string" ]);
+      console.log("r:", r);
+
+      printTitle("Testing non-exist REDIS command");
+      r = await conn.execute([ "aaget", "test_string" ]);
+      console.log("r:", r);
+
+      conn.release()
+    } catch (e) {
+      console.log("**Err:", e.message);
+
+    } finally {
+      conn.release();
+
+    }
+
+    await delay(2000);
+  }
+}
+
+
 async function testServerError() {
   while (true) {
     try {
@@ -73,10 +100,12 @@ async function testServerError() {
       var r = await conn.execute([ "get", "test_string" ]);
       console.log("r:", r);
 
+    } catch (e) {
+      console.error("**Err:", e);
+
+    } finally {
       conn.release();
 
-    } catch (e) {
-      console.error("Caught error:", e);
     }
 
     await delay(2000);
@@ -88,7 +117,8 @@ async function testServerError() {
   //await testConnectionLimit();
   //await testOP();
 
-  testServerError();
+  testErrOP();
+  //testServerError();
 
 })().catch(console.error);
 
