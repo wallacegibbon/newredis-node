@@ -16,15 +16,26 @@ async function testConnectionLimit() {
   const c1 = await pool.getConnection();
   console.log("Got.");
 
+  var r = await c1.execute([ "get", "test_string" ]);
+  console.log("get result:", r);
+
   setTimeout(() => c1.release(), 2000);
+
 
   process.stdout.write("Trying to get a connection from pool... ");
   const c2 = await pool.getConnection();
   console.log("Got.");
 
+  r = await c2.execute([ "get", "test_string" ]);
+  console.log("get result:", r);
+
+
   process.stdout.write("Trying to get a connection from pool... ");
   const c3 = await pool.getConnection();
   console.log("Got.");
+
+  r = await c3.execute([ "get", "test_string" ]);
+  console.log("get result:", r);
 }
 
 
@@ -116,8 +127,8 @@ async function testServerError() {
 (async function() {
   //await testConnectionLimit();
   //await testOP();
-  testErrOP();
-  //testServerError();
+  //testErrOP();
+  testServerError();
 
 })().catch(console.error);
 
