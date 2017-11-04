@@ -1,5 +1,4 @@
-# A Redis Connection Pool Based On Hiredis
-
+# A Redis Connection Pool Implementation
 
 
 ## Introduction
