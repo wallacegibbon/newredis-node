@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a redis connection pool based on [hiredis][1] package. All code are written in the newest JS standard (async/await & promise). Exceptions are handled so you don't need to listen to any event.
+This is a redis connection pool based on [redis-parser][1]. All code are written in the newest JS standard (async/await & promise). Exceptions are handled so you don't need to listen to any event.
 
 
 
@@ -36,7 +36,7 @@ const pool = new RedisPool({ port: 6379, host: "localhost" });
 
 ## Why another redis pool ?
 
-There are already some redis pool implementations available, but most of them(all I saw) are based on [node\_redis][1]. `node_redis` is a good library, but there are 2 things about node\_redis that I don't like:
+There are already some redis pool implementations available, but most of them(all I saw) are based on [node\_redis][1]. `node_redis` is a good library, but there are 2 things about node\_redis that I can't get used to.
 
 (The following tests are based on node\_redis@2.8.0)
 
@@ -96,13 +96,13 @@ function tohmset(key, obj) {
 
 then `conn.execute(tohmset(key, { a: 1, b: 2 }))`. Convenient, too. And you don't need to remember those rules for a certain library.
 
-If you think the wrapper is important, you should do it in upper level, not the basic library.
+If you think the wrapper is important, you should do it in upper level, like what [dbexecutors][3] does.
 
 
 That's why I implement another redis pool.
 
 
-
-[1]: https://github.com/redis/hiredis-node
-[2]: https://github.com/NodeRedis/node_redis
+[1]: https://www.npmjs.com/package/redis-parser
+[2]: https://www.npmjs.com/package/redis
+[3]: https://www.npmjs.com/package/dbexecutors
 

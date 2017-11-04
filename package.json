@@ -1,7 +1,7 @@
 {
   "name": "newredis",
   "description": "A redis connection pool implementation based on hiredis",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
@@ -18,7 +18,7 @@
     "url": "https://github.com/wallacegibbon/newredis-node.git"
   },
   "dependencies": {
-    "hiredis": "^0.5.0"
+    "redis-parser": "^3.0.0"
   },
   "engines": {
     "node": ">=8.0"
