@@ -19,6 +19,22 @@ async function test() {
   }
 }
 
+async function testAuth() {
+  try {
+    console.log("Trying to create connection to redis server...");
+    const conn = new RedisConnection({ password: "asdf" });
+
+    await conn.auth();
+
+    console.log("Trying to send request to redis server...");
+    await conn.execute([ "set", "test_string", "hello" ]);
+
+    const r = await conn.execute([ "get", "test_string" ]);
+    console.log(r);
+  } catch (e) {
+    console.error("**Err:", e);
+  }
+}
 
 async function send4ever(conn) {
   while (true) {
@@ -36,5 +52,8 @@ function delay(milliseconds) {
 }
 
 
-test().catch(console.error);
+(async function() {
+  //await test();
+  await testAuth();
+})().catch(console.error);
 

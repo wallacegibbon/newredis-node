@@ -3,6 +3,7 @@ const { RedisPool } = require("../");
 
 const defaultConfig = {
   connectionLimit: 2,
+  password: "asdf",
 };
 
 

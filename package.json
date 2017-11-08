@@ -1,7 +1,7 @@
 {
   "name": "newredis",
   "description": "A redis connection pool implementation",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
