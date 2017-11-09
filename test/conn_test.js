@@ -1,10 +1,14 @@
 const RedisConnection = require("../lib/conn");
 
+const password = "asdf";
 
 async function test() {
   try {
     console.log("Trying to create connection to redis server...");
     const conn = new RedisConnection();
+
+    console.log("Connection created, now auth...");
+    await conn.execute([ "auth", password ]);
 
     console.log("Trying to send request to redis server...");
     await conn.execute([ "set", "test_string", "hello" ]);
@@ -22,9 +26,10 @@ async function test() {
 async function testAuth() {
   try {
     console.log("Trying to create connection to redis server...");
-    const conn = new RedisConnection({ password: "asdf" });
+    const conn = new RedisConnection();
 
-    await conn.auth();
+    console.log("Connection created, now auth...");
+    await conn.execute([ "auth", password ]);
 
     console.log("Trying to send request to redis server...");
     await conn.execute([ "set", "test_string", "hello" ]);
@@ -53,7 +58,7 @@ function delay(milliseconds) {
 
 
 (async function() {
-  //await test();
-  await testAuth();
+  await test();
+  //await testAuth();
 })().catch(console.error);
 
