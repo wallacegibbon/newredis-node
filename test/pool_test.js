@@ -115,7 +115,7 @@ async function testServerError() {
     } catch (e) {
       console.error("**Err:", e);
     } finally {
-      //conn.release();
+      conn.release();
     }
 
     await delay(2000);
