@@ -8,7 +8,7 @@ const defaultConfig = {
 
 
 const pool = new RedisPool(defaultConfig);
-pool.disableLog();
+//pool.disableLog();
 
 async function testConnectionLimit() {
   //setInterval(() => console.log("process is not blocked."), 1000);
@@ -115,7 +115,7 @@ async function testServerError() {
     } catch (e) {
       console.error("**Err:", e);
     } finally {
-      conn.release();
+      //conn.release();
     }
 
     await delay(2000);
