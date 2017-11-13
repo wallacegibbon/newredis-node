@@ -20,7 +20,7 @@ async function testConnectionLimit() {
   var r = await c1.execute([ "get", "test_string" ]);
   console.log("get result:", r);
 
-  setTimeout(() => c1.release(), 2000);
+  setTimeout(() => c1.release(), 3000);
 
 
   process.stdout.write("Trying to get a connection from pool... ");

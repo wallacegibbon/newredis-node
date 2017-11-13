@@ -23,7 +23,7 @@ function testConcurrency() {
       const b = () => 
         conn.release();
 
-      a().then(b);
+      return a().then(b);
     })
     .catch(e => {
       console.error("Err:", e);
