@@ -8,7 +8,7 @@ This is a pure Javascript based redis client(including a connection pool impleme
 
 ## Usage
 
-There are two class exported by this package: `RedisConnection` and `RedisPool`. I will suggest using `RedisPool` only, because it contains broken connection repair, which is pretty important in production environment. Besides, the API is pretty simple.
+There are two class exported by this package: `RedisConnection` and `RedisPool`. I will suggest using `RedisPool` only, because it contains broken connection repairing, which is important in production environment. Besides, the API is pretty simple.
 
 First, install it through npm:
 ```sh
@@ -17,28 +17,29 @@ npm install newredis
 
 Then import the library and create a client like this:
 
-```javascript
+```js
 const { RedisPool } = require("newredis");
 const pool = new RedisPool({ port: 6379, host: "localhost", password: "asdf" });
 ```
 
-If you are using the default host and default port, you can simply write:
-```javascript
+If you are using the default host(localhost) and default port(6379), you can simply write:
+```js
 const pool = new RedisPool({ password: "asdf" });
 ```
 
 If the `requirepass` in redis configuration is not enabled, you can even write:
-```javascript
+```js
 const pool = new RedisPool();
 ```
 
 Now you can use it in Promise way:
-```javascript
+```js
 pool.getConnection()
 .then(conn => {
-  return conn.execute([ "get", "hello" ]);
+  return conn.execute([ "get", "hello" ]).then(r => [ conn, r ]);
 })
-.then(r => {
+.then(([ conn, r ]) => {
+  conn.release();
   console.log("R:", r);
 })
 .catch(e => {
@@ -47,12 +48,14 @@ pool.getConnection()
 ```
 
 Or in async/await way:
-```javascript
+```js
 async function testConn() {
-  const conn = await pool.getConnection()
+  const conn = await pool.getConnection();
 
   const r = await conn.execute([ "get", "hello" ]);
   console.log("R:", r);
+
+  conn.release();
 }
 
 testConn()
