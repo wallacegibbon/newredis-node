@@ -1,4 +1,4 @@
-const RedisConnection = require("../../lib/conn");
+const { RedisConnection } = require("../..");
 
 const password = "asdf";
 

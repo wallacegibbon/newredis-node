@@ -1,107 +1,65 @@
-# A Redis Connection Pool Implementation
+# A Modern Redis Client
 
 
 ## Introduction
 
-This is a redis connection pool based on [redis-parser][1]. All code are written in the newest JS standard (async/await & promise). Exceptions are handled so you don't need to listen to any event.
+This is a pure Javascript based redis client(including a connection pool implementation). All code are written in the newest JS standard (async/await & Promise). All related exceptions and events are handled so you can write you code as easy as possible.
 
 
+## Usage
 
-## How to use it
+There are two class exported by this package: `RedisConnection` and `RedisPool`. I will suggest using `RedisPool` only, because it contains broken connection repair, which is pretty important in production environment. Besides, the API is pretty simple.
 
 First, install it through npm:
 ```sh
 npm install newredis
 ```
 
-A simple example:
+Then import the library and create a client like this:
 
 ```javascript
 const { RedisPool } = require("newredis");
-const pool = new RedisPool({ port: 6379, host: "localhost" });
+const pool = new RedisPool({ port: 6379, host: "localhost", password: "asdf" });
+```
 
-(async function() {
+If you are using the default host and default port, you can simply write:
+```javascript
+const pool = new RedisPool({ password: "asdf" });
+```
+
+If the `requirepass` in redis configuration is not enabled, you can even write:
+```javascript
+const pool = new RedisPool();
+```
+
+Now you can use it in Promise way:
+```javascript
+pool.getConnection()
+.then(conn => {
+  return conn.execute([ "get", "hello" ]);
+})
+.then(r => {
+  console.log("R:", r);
+})
+.catch(e => {
+  console.error("E:", e);
+});
+```
+
+Or in async/await way:
+```javascript
+async function testConn() {
   const conn = await pool.getConnection()
 
-  await conn.execute([ "set", "test_string", "Info from my redis-pool" ]);
-  const r = await conn.execute([ "get", "test_string" ]);
-
-  console.log(r);
-
-})().catch(console.error);
-```
-
-
-
-## Why another redis pool ?
-
-There are already some redis pool implementations available, but most of them(all I saw) are based on [node\_redis][1]. `node_redis` is a good library, but there are 2 things about node\_redis that I can't get used to.
-
-(The following tests are based on node\_redis@2.8.0)
-
-1. The callback do not get error when the connection is down. You can try the following script:
-
-```javascript
-const redis = require("redis");
-const conn = redis.createClient(6379, "localhost");
-conn.on("error", e => console.error("***Conn err:", e));
-
-setInterval(() => {
-  console.log("==Sending command request...");
-  conn.get("test_string", (e, r) => {
-    if (e) console.error("**command get error:", e);
-    else console.log("result:", r);
-  });
-}, 1000);
-```
-
-Start that script, you will see outputs like this:
-
-```
-==Sending command request...
-result: Info from my redis-pool
-==Sending command request...
-result: Info from my redis-pool
-...
-```
-
-Then you shutdown the redis server, this is what you will see:
-
-```
-==Sending command request...
-***Conn err: { Error: Redis connection to localhost:6379 failed - connect ECONNREFUSED 127.0.0.1:6379
-==Sending command request...
-***Conn err: { Error: Redis connection to localhost:6379 failed - connect ECONNREFUSED 127.0.0.1:6379
-...
-```
-
-You will never see string like "\*\*command get error" because the callback of `conn.get` has never been not called.
-
-This is odd, and it's also why you can't make a perfect Promise wrapper for node\_redis.
-
-In my opinion, if the connection got error when `conn.get` is called, it should trigger the callback of `conn.get`, and give err as argument to the callback of `conn.get`. And I made newredis-node works in that way.
-
-
-
-2. node\_redis wraps every redis command. I don't think it's right. Writing `conn.execute([ "get", "blah" ])` is more flexible then writing `conn.get("blah")`. The previous one is easier to integrate with other programs.
-
-For more complex method like `hmset`, writing `conn.hmset(key, { a: 1, b: 2 })` is cool, but you can also solve it by writing a simple helper function like this:
-
-```javascript
-function tohmset(key, obj) {
-  return [ "hmset", key ].concat([].concat(...Object.entries(obj)));
+  const r = await conn.execute([ "get", "hello" ]);
+  console.log("R:", r);
 }
+
+testConn()
+.catch(e => console.error("E:", e));
 ```
 
-then `conn.execute(tohmset(key, { a: 1, b: 2 }))`. Convenient, too. And you don't need to remember those rules for a certain library.
 
-If you think the wrapper is important, you should do it in upper level, like what [dbexecutors][3] does.
+If you really want to use `RedisConnection` instead of `RedisPool`, there are some examples in test directory.
 
-
-That's why I implement another redis pool.
-
-
-[1]: https://www.npmjs.com/package/redis-parser
-[2]: https://www.npmjs.com/package/redis
-[3]: https://www.npmjs.com/package/dbexecutors
 
