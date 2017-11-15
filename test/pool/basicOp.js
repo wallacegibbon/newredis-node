@@ -1,4 +1,4 @@
-const { RedisPool } = require("../..");
+const { RedisConnectionPool } = require("../..");
 
 
 const defaultConfig = {
@@ -7,7 +7,7 @@ const defaultConfig = {
 };
 
 
-const pool = new RedisPool(defaultConfig);
+const pool = new RedisConnectionPool(defaultConfig);
 //pool.disableLog();
 
 
@@ -35,7 +35,7 @@ async function testOP() {
 
   printTitle("Testing redis hgetall");
   r = await conn.execute([ "hgetall", "test_hash" ]);
-  console.log("hmget result:", r);
+  console.log("hgetall result:", r);
 
   console.log("Release connection.");
   conn.release();

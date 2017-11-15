@@ -1,21 +1,15 @@
 const { RedisConnection } = require("../..");
 
-const password = "asdf";
 
 async function test() {
   try {
     console.log("Trying to create connection to redis server...");
-    const conn = new RedisConnection();
+    const conn = new RedisConnection({ password: "asdf" });
+    //const conn = new RedisConnection({ password: "111" });
+    //conn.disableLog();
 
-    console.log("Connection created, now auth...");
-    await conn.execute([ "auth", password ]);
-
-    console.log("Trying to send request to redis server...");
+    console.log("==Trying to set a key...");
     await conn.execute([ "set", "test_string", "hello" ]);
-
-    //console.log("==Sending ERROR command request...");
-    //await conn.execute([ "ssget", "test_string" ]);
-    //await conn.execute([ "hget", "test_string", "a" ]);
 
     await send4ever(conn);
   } catch (e) {
@@ -26,7 +20,7 @@ async function test() {
 
 async function send4ever(conn) {
   while (true) {
-    console.log("==Sending command request...");
+    console.log("==Trying to get a key...");
     var r = await conn.execute([ "get", "test_string" ]);
     console.log("==Response:", r);
 

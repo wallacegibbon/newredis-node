@@ -1,4 +1,4 @@
-const { RedisPool } = require("../..");
+const { RedisConnectionPool } = require("../..");
 
 
 const defaultConfig = {
@@ -7,7 +7,7 @@ const defaultConfig = {
 };
 
 
-const pool = new RedisPool(defaultConfig);
+const pool = new RedisConnectionPool(defaultConfig);
 //pool.disableLog();
 
 

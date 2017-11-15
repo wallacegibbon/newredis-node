@@ -1,7 +1,7 @@
+const RedisConnectionPool = require("./lib/pool");
 const RedisConnection = require("./lib/conn");
-const RedisPool = require("./lib/pool");
 
 module.exports = {
+  RedisConnectionPool,
   RedisConnection,
-  RedisPool,
 };
