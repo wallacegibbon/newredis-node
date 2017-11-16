@@ -9,6 +9,7 @@ const defaultConfig = {
 
 const pool = new RedisConnectionPool(defaultConfig);
 //pool.disableLog();
+//pool.disableLogColor();
 
 
 function printTitle(str) {

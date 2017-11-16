@@ -7,6 +7,7 @@ async function test() {
     const conn = new RedisConnection({ password: "asdf" });
     //const conn = new RedisConnection({ password: "111" });
     //conn.disableLog();
+    //conn.disableLogColor();
 
     console.log("==Trying to set a key...");
     await conn.execute([ "set", "test_string", "hello" ]);

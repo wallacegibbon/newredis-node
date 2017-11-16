@@ -1,7 +1,7 @@
 {
   "name": "newredis",
   "description": "A redis connection pool implementation",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
@@ -18,7 +18,7 @@
     "url": "https://github.com/wallacegibbon/newredis-node.git"
   },
   "dependencies": {
-    "colourlogger": "^1.0.0",
+    "colourlogger": "^1.2.2",
     "redis-parser": "^3.0.0"
   },
   "engines": {
