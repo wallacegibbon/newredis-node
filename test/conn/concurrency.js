@@ -2,7 +2,11 @@ const { RedisConnection } = require("../..");
 
 const conn = new RedisConnection({ password: "asdf" });
 
-const arr = [ 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+const arr = [];
+
+for (var i = 0; i < 10; i++)
+  arr.push(i);
+
 
 function initializeTeststring() {
   return Promise.all(
@@ -11,17 +15,26 @@ function initializeTeststring() {
 }
 
 function testConcurrency() {
-  return Promise.all(
+  return (
     arr.map(i => {
       conn.execute([ "get", "test_string_" + i ])
       .then(
         r => console.log(`R(${i}):`, r),
-        e => console.error("Err:", e)
+        e => console.error(`E(${i}):`, e)
       );
     })
   );
 }
 
 
-initializeTeststring().then(testConcurrency);
+initializeTeststring()
+.then(testConcurrency)
+.catch(e => console.error("GLOBAL E:", e));
 
+
+/**
+ * To test with fake redis server, you need to call testConcurrency directly.
+ * Because initializeTeststring use Promise.all, which will stop when first
+ * rej is called.
+ */
+//testConcurrency();

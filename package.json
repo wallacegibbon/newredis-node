@@ -1,7 +1,7 @@
 {
   "name": "newredis",
   "description": "A modern redis client package",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
