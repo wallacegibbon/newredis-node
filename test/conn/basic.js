@@ -25,7 +25,7 @@ async function send4ever(conn) {
     var r = await conn.execute([ "get", "test_string" ]);
     console.log("==Response:", r);
 
-    await delay(1000);
+    await delay(2000);
   }
 }
 
