@@ -7,6 +7,8 @@ async function test() {
     console.log("Trying to create connection to redis server...");
     const conn = new RedisConnection({ password: "asdf" });
 
+    await conn.initialize();
+
     console.log("Sending empty array...");
     //await conn.execute([]);
     //await conn.execute([ "set" ]);

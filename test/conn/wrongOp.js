@@ -6,6 +6,8 @@ async function test() {
     console.log("Trying to create connection to redis server...");
     const conn = new RedisConnection({ password: "asdf" });
 
+    await conn.initialize();
+
     console.log("==Sending ERROR command request...");
     await conn.execute([ "ssget", "test_string" ]);
 

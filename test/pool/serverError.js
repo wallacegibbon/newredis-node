@@ -12,12 +12,6 @@ const pool = new RedisConnectionPool(defaultConfig);
 
 
 
-function printTitle(str) {
-  console.log(str.padEnd(79, "="));
-}
-
-
-
 async function delay(milliseconds) {
   return new Promise((res, _) => setTimeout(res, milliseconds));
 }

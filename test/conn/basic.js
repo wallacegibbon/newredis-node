@@ -9,6 +9,8 @@ async function test() {
     //conn.disableLog();
     //conn.disableLogColor();
 
+    await conn.initialize();
+
     console.log("==Trying to set a key...");
     await conn.execute([ "set", "test_string", "hello" ]);
 

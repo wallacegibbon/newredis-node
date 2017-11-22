@@ -27,7 +27,8 @@ function testConcurrency() {
 }
 
 
-initializeTeststring()
+conn.initialize()
+.then(initializeTeststring)
 .then(testConcurrency)
 .catch(e => console.error("GLOBAL E:", e));
 
@@ -37,4 +38,4 @@ initializeTeststring()
  * Because initializeTeststring use Promise.all, which will stop when first
  * rej is called.
  */
-//testConcurrency();
+//conn.initialize().then(testConcurrency);
