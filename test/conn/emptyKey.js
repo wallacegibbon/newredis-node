@@ -6,8 +6,12 @@ async function test() {
     console.log("Trying to create connection to redis server...");
     const conn = new RedisConnection({ password: "asdf" });
 
-    console.log("==Trying to get a key who doesn't exists...");
-    const r = await conn.execute([ "get", "blahblah" ]);
+    console.log("==Trying to get a string key who doesn't exists...");
+    var r = await conn.execute([ "get", "blahblah" ]);
+    console.log("r:", r);
+
+    console.log("==Trying to get a hash key who doesn't exists...");
+    r = await conn.execute([ "hmget", "blahblah", "a", "b" ]);
     console.log("r:", r);
 
   } catch (e) {
