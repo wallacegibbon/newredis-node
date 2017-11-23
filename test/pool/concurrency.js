@@ -26,10 +26,12 @@ function testConcurrency() {
       return a().then(b);
     })
     .catch(e => {
-      console.error("Err:", e);
+      console.error("**Err:", e);
     });
   }
 }
 
 
 testConcurrency();
+
+setTimeout(testConcurrency, 10000);
