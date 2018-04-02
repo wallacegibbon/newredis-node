@@ -18,48 +18,48 @@ npm install newredis
 Then import the library and create a client like this:
 
 ```js
-const { RedisPool } = require("newredis");
-const pool = new RedisPool({ port: 6379, host: "localhost", password: "asdf" });
+const { RedisPool } = require("newredis")
+const pool = new RedisPool({ port: 6379, host: "localhost", password: "asdf" })
 ```
 
 If you are using the default host(localhost) and default port(6379), you can simply write:
 ```js
-const pool = new RedisPool({ password: "asdf" });
+const pool = new RedisPool({ password: "asdf" })
 ```
 
 If the `requirepass` in redis configuration is not enabled, you can even write:
 ```js
-const pool = new RedisPool();
+const pool = new RedisPool()
 ```
 
 Now you can use it in Promise way:
 ```js
 pool.getConnection()
 .then(conn => {
-  return conn.execute([ "get", "hello" ]).then(r => [ conn, r ]);
+  return conn.execute([ "get", "hello" ]).then(r => [ conn, r ])
 })
 .then(([ conn, r ]) => {
-  conn.release();
-  console.log("R:", r);
+  conn.release()
+  console.log("R:", r)
 })
 .catch(e => {
-  console.error("E:", e);
-});
+  console.error("E:", e)
+})
 ```
 
 Or in async/await way:
 ```js
 async function testConn() {
-  const conn = await pool.getConnection();
+  const conn = await pool.getConnection()
 
-  const r = await conn.execute([ "get", "hello" ]);
-  console.log("R:", r);
+  const r = await conn.execute([ "get", "hello" ])
+  console.log("R:", r)
 
-  conn.release();
+  conn.release()
 }
 
 testConn()
-.catch(e => console.error("E:", e));
+.catch(e => console.error("E:", e))
 ```
 
 

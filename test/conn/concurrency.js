@@ -1,17 +1,18 @@
-const { RedisConnection } = require("../..");
+const { RedisConnection } = require("../..")
 
-const conn = new RedisConnection({ password: "asdf" });
+const conn = new RedisConnection()
+// const conn = new RedisConnection({ password: "asdf" })
 
-const arr = [];
+const arr = []
 
-for (var i = 0; i < 10; i++)
-  arr.push(i);
-
+for (var i = 0; i < 10; i++) {
+  arr.push(i)
+}
 
 function initializeTeststring() {
   return Promise.all(
     arr.map(i => conn.execute([ "set", "test_string_" + i, i ]))
-  );
+  )
 }
 
 function testConcurrency() {
@@ -21,16 +22,16 @@ function testConcurrency() {
       .then(
         r => console.log(`R(${i}):`, r),
         e => console.error(`E(${i}):`, e)
-      );
+      )
     })
-  );
+  )
 }
 
 
 conn.initialize()
 .then(initializeTeststring)
 .then(testConcurrency)
-.catch(e => console.error("GLOBAL E:", e));
+.catch(e => console.error("GLOBAL E:", e))
 
 
 /**
@@ -38,4 +39,4 @@ conn.initialize()
  * Because initializeTeststring use Promise.all, which will stop when first
  * rej is called.
  */
-//conn.initialize().then(testConcurrency);
+//conn.initialize().then(testConcurrency)
