@@ -23,5 +23,6 @@
   },
   "engines": {
     "node": ">=7.0"
-  }
+  },
+  "types": "./index.d.ts"
 }
