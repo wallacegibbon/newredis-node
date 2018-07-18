@@ -18,10 +18,11 @@
     "url": "https://github.com/wallacegibbon/newredis-node.git"
   },
   "dependencies": {
-    "colourlogger": "^1.2.4",
+    "colourlogger": "rthadr/colourlogger",
     "redis-parser": "^3.0.0"
   },
   "engines": {
     "node": ">=7.0"
-  }
+  },
+  "types": "./index.d.ts"
 }
