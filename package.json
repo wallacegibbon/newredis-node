@@ -1,7 +1,7 @@
 {
   "name": "newredis",
   "description": "A modern redis client package",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "author": {
     "name": "Wallace Gibbon",
     "email": "wallacegibbon@aliyun.com"
@@ -18,7 +18,7 @@
     "url": "https://github.com/wallacegibbon/newredis-node.git"
   },
   "dependencies": {
-    "colourlogger": "rthadr/colourlogger",
+    "colourlogger": "^1.2.4",
     "redis-parser": "^3.0.0"
   },
   "engines": {
